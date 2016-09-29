@@ -27,7 +27,7 @@ except:
 Converted_Household_IDs = []
 
 # identify legitimate HouseholdID values
-validIDs = sorted([ts.text for ts in topsecret.iter('{http://www.hudhdx.info/Resources/Vendors/4_0_1/HUD_HMIS.xsd}HouseholdID')])
+validIDs = sorted([ts.text for ts in topsecret.iter('{http://www.hudhdx.info/Resources/Vendors/4_0_1/HUD_HMIS.xsd}HouseholdID') if len(ts.text) <= 10])
 
 # identify all HouseholdID tags where text is of length greater than 10
 IDsplusten = [ts.text for ts in topsecret.iter('{http://www.hudhdx.info/Resources/Vendors/4_0_1/HUD_HMIS.xsd}HouseholdID') if len(ts.text) > 10]
