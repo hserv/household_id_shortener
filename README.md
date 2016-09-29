@@ -18,4 +18,5 @@ The script generates 2 output files:
 
 * The converted xml file called "converted.xml" which should exist in the directory you ran the script from.
   This is the xml file with the updated HouseholdIDs.
-* The log file called "conversion_log.txt" which shows the old vs new HouseholdIDs.
+* The log file called "conversion_log.txt" which should exist in the directory you ran the script from.
+  This files shows the old vs new HouseholdIDs.
