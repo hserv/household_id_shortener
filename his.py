@@ -35,8 +35,15 @@ IDsplusten = [ts.text for ts in topsecret.iter('{http://www.hudhdx.info/Resource
 i = 1
 for n, hid in enumerate(IDsplusten):
     print '%d of %d' % (n+1, len(IDsplusten))
+
+    # find an unused ID
     while str(i) in validIDs:
         i += 1
+
+    # test if the ID is valid (i.e. less that 11 digits)
+    if str(i) > 10:
+        print '\nNo more IDs available!!!!\n\n'
+        sys.exit()
 
     # change all occurences
     idpt =  [ts for ts in topsecret.iter('{http://www.hudhdx.info/Resources/Vendors/4_0_1/HUD_HMIS.xsd}HouseholdID') if ts.text == hid]
