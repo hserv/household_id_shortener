@@ -1,7 +1,10 @@
-from lxml import etree
 import sys
 
 helptext = """
+
+You need Python 2.7.x to run. If the script detects the lxml module,
+this script will make use of it to parse the xml.
+
 To run....
 
     print his.py {/path/to/xml/to/convert}
@@ -12,10 +15,16 @@ if len(sys.argv) != 2:
     print helptext
     sys.exit()
 
-Converted_Household_IDs = []
+try:
+    from lxml import etree
+    # load the document
+    topsecret = etree.ElementTree(file=sys.argv[1])
+except:
+    import xml.etree.ElementTree as ET
+    # load the document
+    topsecret = ET.parse(sys.argv[1])
 
-# load the document
-topsecret = etree.ElementTree(file=sys.argv[1])
+Converted_Household_IDs = []
 
 # identify legitimate HouseholdID values
 validIDs = sorted([ts.text for ts in topsecret.iter('{http://www.hudhdx.info/Resources/Vendors/4_0_1/HUD_HMIS.xsd}HouseholdID')])
@@ -42,6 +51,8 @@ for n, hid in enumerate(IDsplusten):
         Converted_Household_IDs.append('Old ID: %s,  New ID: %s\n' % (oldID, str(i)))
         i += 1
 
+#import pprint; pprint.pprint(IDsplusten)
+
 # save log
 log = open('conversion_log.txt', 'w')
 for i in Converted_Household_IDs:
@@ -50,5 +61,5 @@ log.flush()
 log.close()
 
 # save the converted xml
-new_xml = open('converted_topsecret.xml', 'w')
+new_xml = open('converted.xml', 'w')
 topsecret.write(new_xml)
